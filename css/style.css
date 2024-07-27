@@ -34,12 +34,12 @@
 
 html {
     font-size: 62.5%;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    scroll-padding-top: 8rem;
+    /* overflow-x: hidden; */
+    /* scroll-behavior: smooth;
+    scroll-padding-top: 8rem; */
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     height: 0.5rem;
     width: 1rem;
 }
@@ -51,10 +51,11 @@ html {
 ::-webkit-scrollbar-thumb {
     background-color: var(--green);
     border-radius: 5rem;
-}
+} */
 
 body {
     background-color: var(--bg-dark);
+    overflow-y: hidden;
 }
 
 .box {
@@ -78,6 +79,8 @@ body {
     font-size: 2rem;
 }
 
-.button :hover {
-    background-color: red;
+.button:hover {
+    background-color: var(--bg-dark);
+    color: var(--light-yellow);
+    border: 2px solid var(--light-yellow);
 }
