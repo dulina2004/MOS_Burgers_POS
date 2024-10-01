@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>MOS BURGERS</title>
+        <link rel="stylesheet" href="Styles/index.css" />
+        <script>
+            function loadPage(page) {
+                document.getElementById("contentFrame").src = page;
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="buttons">
+                <img src="Images/Logo.jpg" alt="Logo" />
+                <a href="#" onclick="loadPage('home.html')"
+                    ><img src="Images/Home.png" alt="Home"
+                /></a>
+                <a href="#" onclick="loadPage('menu.html')"
+                    ><img src="Images/Menu.png" alt="Menu"
+                /></a>
+                <a href="#" onclick="loadPage('orders.html')"
+                    ><img src="Images/Orders.png" alt="Orders"
+                /></a>
+                <a href="#" onclick="loadPage('items.html')"
+                    ><img src="Images/Items.png" alt="Items"
+                /></a>
+                <a href="#" onclick="loadPage('customers.html')"
+                    ><img src="Images/Customers.png" alt="Customers"
+                /></a>
+                <a href="#" onclick="loadPage('reports.html')"
+                    ><img src="Images/Reports.png" alt="Reports"
+                /></a>
+            </div>
+            <div class="frame">
+                <iframe
+                    id="contentFrame"
+                    src="home.html"
+                    frameborder="0"
+                ></iframe>
+            </div>
+        </div>
+    </body>
+</html>
