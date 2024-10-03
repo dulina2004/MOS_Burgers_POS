@@ -1,18 +1,26 @@
 let items = [];
+
 function init() {
-    fetch("json/items.json")
-        .then((response) => response.json())
-        .then((data) => {
-            data.forEach((item) => {
-                items.push(item);
+    if (JSON.parse(localStorage.getItem("items")) == null) {
+        fetch("json/items.json")
+            .then((response) => response.json())
+            .then((data) => {
+                items = data;
+                const newArray = items.map((_, index) => index);
+                renderMenu(items, newArray);
             });
-        });
+    } else {
+        items = JSON.parse(localStorage.getItem("items"));
+        const newArray = items.map((_, index) => index);
+        renderMenu(items, newArray);
+    }
 }
 
 let cart = [];
 let orders = JSON.parse(localStorage.getItem("orders")) || [];
 
-function renderMenu(items) {
+function renderMenu(items, code) {
+    console.log(code); // Logs the array of indices
     const menuContent = document.getElementById("menu-content");
     menuContent.innerHTML = "";
 
@@ -31,22 +39,59 @@ function renderMenu(items) {
             <div class="card-body dark-brown">
                 <h5 class="card-title">${item.name}</h5>
                 <p class="card-text">Price: Rs.${item.price}</p>
-                <button class="btn btn-primary btn-add-item button" onclick="addToCart(${index})">Add Item</button>
+                <button class="btn btn-primary btn-add-item button" onclick="addToCart(${code[index]})">Add item</button>
             </div>
         `;
-
         col.appendChild(card);
         row.appendChild(col);
     });
 
-    menuContent.appendChild(row); // Add row to the menu content
+    menuContent.appendChild(row);
 }
+
+// function renderMenu(items) {
+//     const menuContent = document.getElementById("menu-content");
+//     menuContent.innerHTML = "";
+
+//     const row = document.createElement("div");
+//     row.classList.add("row");
+
+//     items.forEach((item, index) => {
+//         const col = document.createElement("div");
+//         col.classList.add("col-md-4", "mb-4");
+
+//         const card = document.createElement("div");
+//         card.classList.add("card", "h-100");
+
+//         card.innerHTML = `
+//             <img src="${item.imageUrl}" class="card-img-top" alt="${item.name}">
+//             <div class="card-body dark-brown">
+//                 <h5 class="card-title">${item.name}</h5>
+//                 <p class="card-text">Price: Rs.${item.price}</p>
+//                 <button class="btn btn-primary btn-add-item button" onclick="addToCart(${index})">Add Item</button>
+//             </div>
+//         `;
+
+//         col.appendChild(card);
+//         row.appendChild(col);
+//     });
+
+//     menuContent.appendChild(row); // Add row to the menu content
+// }
 
 function filterCategory(category) {
     if (category === "All") {
-        renderMenu(items);
+        const newArray = items.map((_, index) => index);
+        renderMenu(items, newArray);
     } else {
-        renderMenu(items.filter((item) => item.itemtype === category));
+        const filteredIndices = items
+            .map((item, index) => (item.itemtype === category ? index : null))
+            .filter((index) => index !== null);
+        console.log(filteredIndices);
+        renderMenu(
+            items.filter((item) => item.itemtype === category),
+            filteredIndices
+        );
     }
 }
 
@@ -130,8 +175,7 @@ function placeOrder() {
         totalPrice,
     };
 
-    orders.push(order); // Add order to the orders array
-    localStorage.setItem("orders", JSON.stringify(orders)); // Store orders in localStorage
+    localStorage.setItem("orders", JSON.stringify(orders));
 
     console.log("Order placed:", order);
     alert("Order placed successfully!");
@@ -147,5 +191,57 @@ document.getElementById("placeOrder").addEventListener("click", placeOrder);
 
 window.onload = function () {
     init();
-    filterCategory("All");
 };
+/////////////////
+let customers = JSON.parse(localStorage.getItem("customers")) || [];
+console.log(customers);
+
+const searchInput = document.getElementById("searchInput");
+const dropdownList = document.getElementById("dropdownList");
+
+function filterData(query) {
+    return customers.filter((customer) =>
+        customer.name.toLowerCase().includes(query.toLowerCase())
+    );
+}
+
+function displayDropdown(matches) {
+    dropdownList.innerHTML = "";
+    if (matches.length > 0) {
+        matches.forEach((match) => {
+            const li = document.createElement("li");
+            li.classList.add("dropdown-item");
+            li.textContent = match.name;
+            li.onclick = () => selectCustomer(match);
+            dropdownList.appendChild(li);
+        });
+        dropdownList.style.display = "block";
+    } else {
+        dropdownList.style.display = "none";
+    }
+}
+
+function selectCustomer(customer) {
+    const customerName = document.getElementById("customerName");
+    const contactNo = document.getElementById("contactNo");
+
+    searchInput.value = customer.name;
+    customerName.value = customer.name;
+    contactNo.value = customer.phone;
+    dropdownList.style.display = "none";
+}
+
+searchInput.addEventListener("input", () => {
+    const query = searchInput.value;
+    const matches = filterData(query);
+    displayDropdown(matches);
+});
+
+document.addEventListener("click", (event) => {
+    if (
+        !searchInput.contains(event.target) &&
+        !dropdownList.contains(event.target)
+    ) {
+        dropdownList.style.display = "none";
+    }
+});

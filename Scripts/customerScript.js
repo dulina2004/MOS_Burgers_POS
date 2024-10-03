@@ -2,7 +2,6 @@ refreshTable();
 let customers = JSON.parse(localStorage.getItem("customers")) || [];
 let editingIndex = -1;
 
-// Function to handle form submission
 document
     .getElementById("customerForm")
     .addEventListener("submit", function (e) {
@@ -31,16 +30,15 @@ document
 function addCustomer(customer) {
     customers.push(customer);
     localStorage.setItem("customers", JSON.stringify(customers));
-    // addCustomerToTable(customer, customers.length - 1);
 }
 
-// Function to update a customer in the array and table
+//update a customer
 function updateCustomer(index, updatedCustomer) {
     customers[index] = updatedCustomer;
     updateCustomerInTable(index, updatedCustomer);
 }
 
-// Function to add a customer to the table
+//  add a customer
 function addCustomerToTable(customer, index) {
     const tableBody = document.querySelector("#customerTable tbody");
     const row = document.createElement("tr");
@@ -59,7 +57,7 @@ function addCustomerToTable(customer, index) {
     tableBody.appendChild(row);
 }
 
-// Function to update a customer in the table
+// update a customer
 function updateCustomerInTable(index, customer) {
     const tableBody = document.querySelector("#customerTable tbody");
     const row = tableBody.rows[index];
@@ -70,14 +68,14 @@ function updateCustomerInTable(index, customer) {
     row.cells[3].innerText = customer.address;
 }
 
-// Function to delete a customer from the array and table
+// delete a customer from the array and table
 function deleteCustomer(index) {
     customers.splice(index, 1);
     localStorage.setItem("customers", JSON.stringify(customers));
     refreshTable();
 }
 
-// Function to edit a customer's information
+// edit a customer's information
 function editCustomer(index) {
     const customer = customers[index];
     document.getElementById("name").value = customer.name;
@@ -85,13 +83,13 @@ function editCustomer(index) {
     document.getElementById("phone").value = customer.phone;
     document.getElementById("address").value = customer.address;
 
-    // Change form button to update
+    // Change form button
     document.querySelector("#customerForm button").innerText =
         "Update Customer";
-    editingIndex = index; // Set the index of the customer being edited
+    editingIndex = index;
 }
 
-// Function to search for a customer
+// search for a customer
 function searchCustomer() {
     const searchInput = document
         .getElementById("searchInput")
@@ -108,10 +106,10 @@ function searchCustomer() {
     });
 }
 
-// Function to refresh the table (re-render all rows)
+// refresh the table (re-render all rows)
 function refreshTable() {
     const customerTable = document.getElementById("customerTable");
-    // Retrieve orders from localStorage
+    // localStorage
     const customers = JSON.parse(localStorage.getItem("customers")) || [];
 
     let body = `<tr>
@@ -122,7 +120,7 @@ function refreshTable() {
                             <th>Actions</th>
                         </tr>`;
 
-    // Display all orders
+    // Display
     customers.forEach((customer, index) => {
         body += `<tr>
                 <td>${customer.name}</td>
@@ -130,8 +128,8 @@ function refreshTable() {
             <td>${customer.phone}</td>
             <td>${customer.address}</td>
             <td class="actions">
-                <button onclick="editCustomer(${index})">Edit</button>
-                <button onclick="deleteCustomer(${index})">Delete</button>
+                <button onclick="editCustomer(${index})" class="button">Edit</button>
+                <button onclick="deleteCustomer(${index})" class="button">Delete</button>
             </td>
                 </tr>
             `;

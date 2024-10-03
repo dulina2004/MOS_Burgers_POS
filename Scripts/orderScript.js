@@ -26,13 +26,3 @@ document.addEventListener("DOMContentLoaded", () => {
         orderTableBody.appendChild(row);
     });
 });
-
-// function saveOrdersToLocalStorage(orders) {
-//     localStorage.setItem("orders", JSON.stringify(orders));
-// }
-
-// function addOrder(newOrder) {
-//     let orders = JSON.parse(localStorage.getItem("orders")) || [];
-//     orders.push(newOrder);
-//     saveOrdersToLocalStorage(orders);
-// }

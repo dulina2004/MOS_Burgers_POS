@@ -8,18 +8,16 @@ if (JSON.parse(localStorage.getItem("items")) == null) {
 }
 let editingIndex = -1;
 
-// Function to handle form submission
+// submission
 document.getElementById("itemForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
-    // Get form values
     const itemno = document.getElementById("itemno").value.trim();
     const itemtype = document.getElementById("itemtype").value.trim();
     const name = document.getElementById("name").value.trim();
     const price = document.getElementById("price").value.trim();
     const image = document.getElementById("image").files[0];
 
-    // Basic validation
     if (
         itemno === "" ||
         itemtype === "" ||
@@ -31,7 +29,6 @@ document.getElementById("itemForm").addEventListener("submit", function (e) {
         return;
     }
 
-    // Convert the image to a base64 string
     const reader = new FileReader();
     reader.readAsDataURL(image);
     reader.onload = function () {
@@ -51,25 +48,25 @@ document.getElementById("itemForm").addEventListener("submit", function (e) {
             editingIndex = -1;
         }
 
-        // Reset the form
+        // Reset
         document.getElementById("itemForm").reset();
     };
 });
 
-// Function to add an item to the array and table
+// add an item to the array and table
 function addItem(item) {
     items.push(item);
     localStorage.setItem("items", JSON.stringify(items));
     addItemToTable(item, items.length - 1);
 }
 
-// Function to update an item in the array and table
+//update an item in the array and table
 function updateItem(index, updatedItem) {
     items[index] = updatedItem;
     updateItemInTable(index, updatedItem);
 }
 
-// Function to add an item to the table
+//add an item to the table
 function addItemToTable(item, index) {
     const tableBody = document.querySelector("#itemTable tbody");
     const row = document.createElement("tr");
@@ -89,7 +86,7 @@ function addItemToTable(item, index) {
     tableBody.appendChild(row);
 }
 
-// Function to update an item in the table
+// update an item in the table
 function updateItemInTable(index, item) {
     const tableBody = document.querySelector("#itemTable tbody");
     const row = tableBody.rows[index];
@@ -101,13 +98,13 @@ function updateItemInTable(index, item) {
     row.cells[4].innerHTML = `<img src="${item.imageUrl}" alt="${item.name}" class="item-image">`;
 }
 
-// Function to delete an item from the array and table
+//delete an item from the array and table
 function deleteItem(index) {
     items.splice(index, 1);
     refreshTable();
 }
 
-// Function to edit an item's information
+// edit an item's information
 function editItem(index) {
     const item = items[index];
     document.getElementById("itemno").value = item.itemno;
@@ -115,12 +112,10 @@ function editItem(index) {
     document.getElementById("name").value = item.name;
     document.getElementById("price").value = item.price;
 
-    // We don't prefill the file input for security reasons
     document.querySelector("#itemForm button").innerText = "Update Item";
     editingIndex = index;
 }
 
-// Function to search for an item
 function searchItem() {
     const searchInput = document
         .getElementById("searchInput")
@@ -137,7 +132,6 @@ function searchItem() {
     });
 }
 
-// Function to refresh the table (re-render all rows)
 function refreshTable() {
     const tableBody = document.querySelector("#itemTable tbody");
     tableBody.innerHTML = "";
@@ -146,7 +140,7 @@ function refreshTable() {
     });
 }
 
-// Function to load initial items
+// load initial items
 function loadInitialItems() {
     fetch("json/items.json")
         .then((response) => response.json())
@@ -160,6 +154,3 @@ function loadInitialItems() {
         });
     refreshTable();
 }
-
-// Load initial items when the page loads
-//window.onload = loadInitialItems;
