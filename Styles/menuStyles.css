@@ -83,16 +83,12 @@ body {
     font-weight: bold;
 }
 
-/* Media Queries for responsiveness */
-
-/* Tablets and up (min-width: 768px) */
 @media (min-width: 768px) {
     .container {
         flex-direction: row;
     }
 }
 
-/* Phones (max-width: 767px) */
 @media (max-width: 767px) {
     .container {
         flex-direction: column;
@@ -106,7 +102,7 @@ body {
     }
 
     .card-img-top {
-        height: auto; /* Adjust height of images */
+        height: auto;
     }
 
     .btn-add-item {
@@ -116,7 +112,7 @@ body {
 
 @media (max-width: 500px) {
     .cart-item input {
-        width: 40px; /* Adjust input width for smaller screens */
+        width: 40px;
     }
 }
 
