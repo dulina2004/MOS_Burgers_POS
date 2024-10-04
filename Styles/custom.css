@@ -21,17 +21,15 @@
     background-color: var(--light-yellow);
     color: var(--bg-dark);
     border: 1px solid var(--bg-dark);
-    transition: background-color 0.3s, color 0.3s; /* Optional: Smooth transitions */
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* Hover State */
 .button:hover {
     background-color: var(--bg-dark) !important;
     color: var(--light-yellow) !important;
     border: 1px solid var(--light-yellow);
 }
 
-/* Active State */
 .button:active {
     background-color: var(--light-yellow) !important;
     color: var(--bg-dark) !important;

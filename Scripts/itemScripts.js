@@ -53,20 +53,20 @@ document.getElementById("itemForm").addEventListener("submit", function (e) {
     };
 });
 
-// add an item to the array and table
+// add
 function addItem(item) {
     items.push(item);
     localStorage.setItem("items", JSON.stringify(items));
     addItemToTable(item, items.length - 1);
 }
 
-//update an item in the array and table
+//update
 function updateItem(index, updatedItem) {
     items[index] = updatedItem;
     updateItemInTable(index, updatedItem);
 }
 
-//add an item to the table
+//add
 function addItemToTable(item, index) {
     const tableBody = document.querySelector("#itemTable tbody");
     const row = document.createElement("tr");
@@ -86,7 +86,7 @@ function addItemToTable(item, index) {
     tableBody.appendChild(row);
 }
 
-// update an item in the table
+// update
 function updateItemInTable(index, item) {
     const tableBody = document.querySelector("#itemTable tbody");
     const row = tableBody.rows[index];
@@ -98,13 +98,13 @@ function updateItemInTable(index, item) {
     row.cells[4].innerHTML = `<img src="${item.imageUrl}" alt="${item.name}" class="item-image">`;
 }
 
-//delete an item from the array and table
+//delete
 function deleteItem(index) {
     items.splice(index, 1);
     refreshTable();
 }
 
-// edit an item's information
+// edit
 function editItem(index) {
     const item = items[index];
     document.getElementById("itemno").value = item.itemno;
@@ -140,7 +140,7 @@ function refreshTable() {
     });
 }
 
-// load initial items
+// load
 function loadInitialItems() {
     fetch("json/items.json")
         .then((response) => response.json())

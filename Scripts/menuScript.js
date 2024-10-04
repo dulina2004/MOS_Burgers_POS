@@ -178,7 +178,7 @@ function placeOrder() {
     localStorage.setItem("orders", JSON.stringify(orders));
 
     console.log("Order placed:", order);
-    alert("Order placed successfully!");
+    //alert("Order placed successfully!");
     cart = [];
     document.getElementById("customerName").value = "";
     document.getElementById("contactNo").value = "";
